@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NutriGuide - Your Personal Nutrition Assistant</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
+}
+
+body{
+background:#f4fff7;
+color:#333;
+}
+
+header{
+background:#2e8b57;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+header h1{
+font-size:40px;
+}
+
+header p{
+margin-top:10px;
+}
+
+.hero{
+display:flex;
+justify-content:center;
+align-items:center;
+padding:60px 20px;
+background:linear-gradient(to right,#90ee90,#2e8b57);
+color:white;
+text-align:center;
+}
+
+.hero-content{
+max-width:700px;
+}
+
+.hero h2{
+font-size:40px;
+margin-bottom:20px;
+}
+
+.hero p{
+font-size:18px;
+margin-bottom:25px;
+}
+
+button{
+padding:15px 35px;
+border:none;
+background:white;
+color:#2e8b57;
+font-size:18px;
+border-radius:30px;
+cursor:pointer;
+font-weight:bold;
+transition:.3s;
+}
+
+button:hover{
+background:#145a32;
+color:white;
+}
+
+section{
+padding:60px 10%;
+}
+
+h2{
+text-align:center;
+margin-bottom:30px;
+color:#2e8b57;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+}
+
+.card h3{
+margin-bottom:15px;
+color:#2e8b57;
+}
+
+.form-box{
+max-width:700px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+
+input,select,textarea{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:1px solid #ccc;
+border-radius:8px;
+}
+
+footer{
+background:#2e8b57;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:40px;
+}
+
+#result{
+margin-top:20px;
+font-size:20px;
+color:#2e8b57;
+font-weight:bold;
+text-align:center;
+}
+</style>
+
+</head>
+<body>
+<script>
+  window.wxOConfiguration = {
+    orchestrationID: "8c99c1307ef24a2594653105b35781e9_943fa3bd-85a6-4548-aa58-d4bf0ed5a14f",
+    hostURL: "https://us-south.watson-orchestrate.cloud.ibm.com",
+    rootElementID: "root",
+    deploymentPlatform: "ibmcloud",
+    crn: "crn:v1:bluemix:public:watsonx-orchestrate:us-south:a/8c99c1307ef24a2594653105b35781e9:943fa3bd-85a6-4548-aa58-d4bf0ed5a14f::",
+    chatOptions: {
+        agentId: "09811524-9c8a-4075-8eec-f28efcab593b", 
+    }
+  };
+  setTimeout(function () {
+    const script = document.createElement('script');
+    script.src = `${window.wxOConfiguration.hostURL}/wxochat/wxoLoader.js?embed=true`;
+    script.addEventListener('load', function () {
+        wxoLoader.init();
+    });
+    document.head.appendChild(script);
+  }, 0);                     
+</script>
+
+<header>
+<h1>NutriGuide</h1>
+<p>Your Smart Nutrition & Healthy Lifestyle Assistant</p>
+</header>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h2>Eat Healthy. Live Better.</h2>
+
+<p>
+NutriGuide helps you understand your nutrition needs based on your age,
+health conditions and lifestyle.
+</p>
+
+<button onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'})">
+Get Started
+</button>
+
+</div>
+
+</section>
+
+<section>
+
+<h2>Why Choose NutriGuide?</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>🥗 Personalized Diet</h3>
+<p>Receive diet suggestions according to your age and health.</p>
+</div>
+
+<div class="card">
+<h3>💧 Hydration Tips</h3>
+<p>Know how much water you should drink every day.</p>
+</div>
+
+<div class="card">
+<h3>🏃 Healthy Lifestyle</h3>
+<p>Simple fitness and nutrition guidance for everyone.</p>
+</div>
+
+<div class="card">
+<h3>❤️ Medical Awareness</h3>
+<p>Diet suggestions considering diabetes, BP and other conditions.</p>
+</div>
+
+</div>
+
+</section>
+
+<section id="form">
+
+<h2>Tell Us About Yourself</h2>
+
+<div class="form-box">
+
+<input type="text" id="name" placeholder="Your Name">
+
+<input type="number" id="age" placeholder="Age">
+
+<select id="gender">
+<option>Select Gender</option>
+<option>Male</option>
+<option>Female</option>
+<option>Other</option>
+</select>
+
+<input type="text" id="location" placeholder="Location">
+
+<input type="text" id="medical" placeholder="Medical Condition (Optional)">
+
+<textarea id="goal" rows="4" placeholder="Your Health Goal"></textarea>
+
+<button onclick="guide()">Get Nutrition Advice</button>
+
+<div id="result"></div>
+
+</div>
+
+</section>
+
+<footer>
+
+<p>© 2026 NutriGuide | Eat Smart • Stay Healthy</p>
+
+</footer>
+
+<script>
+
+function guide(){
+
+let name=document.getElementById("name").value;
+let age=document.getElementById("age").value;
+let medical=document.getElementById("medical").value.toLowerCase();
+
+let message="";
+
+if(age<18){
+message="Eat calcium-rich foods, fruits, vegetables and proteins for healthy growth.";
+}
+else if(age<40){
+message="Maintain a balanced diet with proteins, whole grains and regular exercise.";
+}
+else{
+message="Focus on fiber, calcium, low sugar and regular health checkups.";
+}
+
+if(medical.includes("diabetes")){
+message+=" Avoid sugary drinks and eat low GI foods.";
+}
+
+if(medical.includes("bp") || medical.includes("blood pressure")){
+message+=" Reduce salt intake and include potassium-rich foods.";
+}
+
+if(medical.includes("heart")){
+message+=" Choose healthy fats and reduce processed foods.";
+}
+
+document.getElementById("result").innerHTML=
+"Hello <b>"+name+"</b>!<br><br>"+message;
+
+}
+
+</script>
+
+
+</body>
+</html>
